@@ -1,41 +1,37 @@
 from PIL import ImageFilter
+from os import path
 
-def blur(img, img_name):
-    blur_img = img.filter(ImageFilter.BLUR)
-    blur_img.save(f'{img_name}_blur.png', 'png')
+def save_image_with_filter(img, img_name, output_path, filter_name, filter_func):
+    filtered_img = img.filter(filter_func)
+    output_file_path = path.join(output_path, f'{img_name}_{filter_name}.png')
+    filtered_img.save(output_file_path, 'PNG')
 
-def contour(img, img_name):
-    contour_img = img.filter(ImageFilter.CONTOUR)
-    contour_img.save(f'{img_name}_contour.png', 'png')
+def blur(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'blur', ImageFilter.BLUR)
 
-def detail(img, img_name):
-    detail_img = img.filter(ImageFilter.DETAIL)
-    detail_img.save(f'{img_name}_detail.png', 'png')
+def contour(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'contour', ImageFilter.CONTOUR)
 
-def edge(img, img_name):
-    edge_img = img.filter(ImageFilter.EDGE_ENHANCE)
-    edge_img.save(f'{img_name}_edgeenhance.png', 'png')
+def detail(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'detail', ImageFilter.DETAIL)
 
-def xedge(img, img_name):
-    xedge_img = img.filter(ImageFilter.EDGE_ENHANCE_MORE)
-    xedge_img.save(f'{img_name}_xedgeenhance.png', 'png')
+def edge(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'edgeenhance', ImageFilter.EDGE_ENHANCE)
 
-def emboss(img, img_name):
-    emboss_img = img.filter(ImageFilter.EMBOSS)
-    emboss_img.save(f'{img_name}_emboss.png', 'png')
+def xedge(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'xedgeenhance', ImageFilter.EDGE_ENHANCE_MORE)
 
-def sharp(img, img_name):
-    sharp_img = img.filter(ImageFilter.SHARPEN)
-    sharp_img.save(f'{img_name}_sharp.png', 'png')
+def emboss(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'emboss', ImageFilter.EMBOSS)
 
-def fedge(img, img_name):
-    fedge_img = img.filter(ImageFilter.FIND_EDGES)
-    fedge_img.save(f'{img_name}_fedge.png', 'png')
+def sharp(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'sharp', ImageFilter.SHARPEN)
 
-def smooth(img, img_name):
-    smooth_img = img.filter(ImageFilter.SMOOTH)
-    smooth_img.save(f'{img_name}_smooth.png', 'png')
+def fedge(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'fedge', ImageFilter.FIND_EDGES)
 
-def xsmooth(img, img_name):
-    xsmooth_img = img.filter(ImageFilter.SMOOTH_MORE)
-    xsmooth_img.save(f'{img_name}_xsmooth.png', 'png')
+def smooth(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'smooth', ImageFilter.SMOOTH)
+
+def xsmooth(img, img_name, output_path):
+    save_image_with_filter(img, img_name, output_path, 'xsmooth', ImageFilter.SMOOTH_MORE)
