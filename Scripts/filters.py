@@ -1,6 +1,4 @@
-from tkinter import filedialog as fd
-from PIL import Image, ImageFilter
-from os import path
+from PIL import ImageFilter
 
 def blur(img, img_name):
     blur_img = img.filter(ImageFilter.BLUR)
@@ -41,26 +39,3 @@ def smooth(img, img_name):
 def xsmooth(img, img_name):
     xsmooth_img = img.filter(ImageFilter.SMOOTH_MORE)
     xsmooth_img.save(f'{img_name}_xsmooth.png', 'png')
-
-def open_image_and_process():
-    file_path = fd.askopenfilename()
-
-    if file_path:
-        img = Image.open(file_path)
-        img_name = path.basename(file_path) 
-
-        blur(img, img_name)
-        contour(img, img_name)
-        detail(img, img_name)
-        edge(img, img_name)
-        xedge(img, img_name)
-        emboss(img, img_name)
-        fedge(img, img_name)
-        sharp(img, img_name)
-        smooth(img, img_name)
-        xsmooth(img, img_name)
-    else:
-        raise FileNotFoundError("The file you are trying to access does not exist. Please try again.")
-
-if __name__ == '__main__':
-    open_image_and_process()
