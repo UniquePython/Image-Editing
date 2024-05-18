@@ -121,3 +121,4 @@ if __name__ == '__main__':
     init(autoreset=True)
     img_path = select_image()
     process_image(img_path)
+    
