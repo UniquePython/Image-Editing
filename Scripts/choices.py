@@ -1,8 +1,10 @@
-from colorama import init, Fore, Style
-
-init(autoreset=True)
+from colorama import Fore, Style
 
 def choices():
+    """
+    Display the available filter choices to the user.
+    """
+    # Display filter choices
     print(Fore.BLUE + "What do you want to do?" + Style.RESET_ALL)
     print(Fore.CYAN + "1. Blur" + Style.RESET_ALL)
     print(Fore.CYAN + "2. Contour" + Style.RESET_ALL)
