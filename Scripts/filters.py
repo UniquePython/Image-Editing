@@ -1,11 +1,14 @@
 from PIL import ImageFilter
 from os import path
 from colorama import Fore, Style
+import time
 
 def save_image_with_filter(img, filter_func, img_base_name, output_path):
     filtered_img = img.filter(filter_func)
 
-    output_file_path = path.join(output_path, f"{img_base_name}_{filter_func.__name__}.png")
+    timestamp = str(int(time.time() * 1000))
+
+    output_file_path = path.join(output_path, f"{img_base_name}_{filter_func.__name__}_{timestamp}.png")
 
     filtered_img.save(output_file_path, 'PNG')
     print(Fore.GREEN + f"Image saved as: {output_file_path}" + Style.RESET_ALL)
