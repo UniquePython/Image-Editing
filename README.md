@@ -1,4 +1,4 @@
-# Image Filter Application
+# Image Editor Application
 This Python application allows users to apply various filters to their images.
 
 ## How to Use
