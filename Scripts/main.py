@@ -6,6 +6,8 @@ from sys import platform
 from colorama import init, Fore, Style
 from filters import *
 from choices import *
+import time
+import os  # Importing os module to get file size
 
 def select_image():
     """
@@ -66,11 +68,21 @@ def process_image(img_path):
                     user_choice = int(input(Fore.YELLOW + "Enter your choice: " + Style.RESET_ALL))
 
                     if user_choice in range(1, 11):
-                        # Apply the selected filter to the image
-                        apply_filter(img, img_base_name, output_path, user_choice)
+                        # Start timing the image processing
+                        start_time = time.time()
 
+                        # Apply the selected filter to the image
+                        output_img_path = apply_filter(img, img_base_name, output_path, user_choice)
+
+                        # End timing the image processing
+                        end_time = time.time()
+                        
+                        # Calculate and display the processing time
+                        processing_time = end_time - start_time
+                        print(Fore.GREEN + f"Processing completed in {processing_time:.2f} seconds." + Style.RESET_ALL)
+                        
                         # Open the image
-                        open_image(output_path)
+                        open_image(output_img_path)
                         break  # Exit the loop if input is valid
                     else:
                         # Handle invalid input for filter choice
@@ -80,6 +92,8 @@ def process_image(img_path):
                     print(Fore.RED + "Invalid Input. Please enter a valid number." + Style.RESET_ALL)
         except FileNotFoundError as e:
             print(e)
+        except IOError as e:
+            print(Fore.RED + "An error occurred while opening the image file:", str(e) + Style.RESET_ALL)
         except Exception as e:
             print(Fore.RED + "An error occurred while processing the image:", str(e) + Style.RESET_ALL)
     else:
@@ -87,33 +101,17 @@ def process_image(img_path):
         print(Fore.RED + "No file selected. Exiting the program." + Style.RESET_ALL)
 
 def apply_filter(img, img_base_name, output_path, user_choice):
-    """
-    Apply the selected filter to the image.
-
-    Parameters:
-    img (PIL.Image): The input image to be processed.
-    img_base_name (str): The base name of the input image file.
-    output_path (str): The directory where the processed image will be saved.
-    user_choice (int): The user's choice of filter.
-    """
-    # Apply the selected filter to the image
     filter_functions = [blur, contour, detail, edge, xedge, emboss, fedge, sharp, smooth, xsmooth]
     selected_filter = filter_functions[user_choice - 1]
-    selected_filter(img, img_base_name, output_path)  
-    print(Fore.GREEN + "Processing Complete!" + Style.RESET_ALL)
+    return selected_filter(img, img_base_name, output_path)
 
 def open_image(file_path):
-    """
-    Open the specified image file using the default image viewer.
-
-    Parameters:
-    file_path (str): The file path of the image to be opened.
-    """
-    if name == 'nt':  # For Windows
-        startfile(file_path)
-    elif name == 'posix':  # For macOS and Linux
-        opener = 'open' if platform == 'darwin' else 'xdg-open'
-        system(f"{opener} {file_path}")
+    if file_path:
+        if name == 'nt':
+            startfile(file_path)
+        elif name == 'posix':
+            opener = 'open' if platform == 'darwin' else 'xdg-open'
+            system(f"{opener} {file_path}")
 
 
 if __name__ == '__main__':
@@ -121,4 +119,3 @@ if __name__ == '__main__':
     init(autoreset=True)
     img_path = select_image()
     process_image(img_path)
-    
